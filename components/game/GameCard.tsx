@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
 import { GameSafe, GameScores } from '@/types/game';
+import { GameRating } from './GameRating';
 
 interface GameCardProps {
   game: GameSafe;
@@ -166,6 +167,16 @@ export function GameCard({ game }: GameCardProps) {
               <Button variant="ghost" size="sm" onClick={handleHideScores}>
                 Hide Score
               </Button>
+            </div>
+          )}
+
+          {game.status === 'final' && (
+            <div className="mt-4">
+              <GameRating 
+                gameId={game.id} 
+                initialRating={Math.random() * 4 + 5} 
+                totalVotes={Math.floor(Math.random() * 100) + 10}
+              />
             </div>
           )}
         </CardContent>
