@@ -27,9 +27,11 @@ This document provides detailed, actionable skills and implementation guides for
 ## Skill 1: Project Initialization
 
 ### Objective
+
 Set up a new Next.js project with TypeScript, Tailwind CSS, and all necessary dependencies.
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - pnpm, npm, or yarn package manager
 - Git for version control
@@ -158,9 +160,11 @@ pnpm dev
 ## Skill 2: Supabase Database Setup
 
 ### Objective
+
 Create a Supabase project and set up the database schema with proper tables, relationships, and security policies.
 
 ### Prerequisites
+
 - Supabase account
 - Project created in Supabase dashboard
 - Supabase CLI installed (optional but recommended)
@@ -416,7 +420,7 @@ CREATE POLICY "Users can delete their own subscriptions"
 CREATE OR REPLACE FUNCTION is_voting_open(game_date TIMESTAMPTZ, game_status VARCHAR)
 RETURNS BOOLEAN AS $$
 BEGIN
-  RETURN game_status = 'final' 
+  RETURN game_status = 'final'
     AND game_date > NOW() - INTERVAL '7 days';
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
@@ -504,6 +508,7 @@ SELECT * FROM pg_policies;
 ## Skill 3: Spoiler-Safe Game Components
 
 ### Objective
+
 Build React components that display game information without revealing scores until explicitly requested.
 
 ### Implementation Steps
@@ -554,20 +559,20 @@ import { format, isToday, isTomorrow, isPast } from 'date-fns';
 
 export function getRevealedGames(): Set<string> {
   if (typeof window === 'undefined') return new Set();
-  
+
   const stored = localStorage.getItem('revealed-games');
   return stored ? new Set(JSON.parse(stored)) : new Set();
 }
 
 export function setGameRevealed(gameId: string, revealed: boolean) {
   const revealedGames = getRevealedGames();
-  
+
   if (revealed) {
     revealedGames.add(gameId);
   } else {
     revealedGames.delete(gameId);
   }
-  
+
   localStorage.setItem('revealed-games', JSON.stringify([...revealedGames]));
 }
 
@@ -665,7 +670,7 @@ export function SpoilerAlertDialog({
             You are about to reveal the score for:
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="bg-muted p-4 rounded-lg">
           <p className="font-semibold text-center">
             {gameInfo.homeTeam} vs {gameInfo.awayTeam}
@@ -868,14 +873,14 @@ export function GameCard({ game, onReveal }: GameCardProps) {
               <Clock className="h-4 w-4" />
               <span>{formatGameTime(game.gameDate)}</span>
             </div>
-            
+
             {game.venue && (
               <div className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="h-4 w-4" />
                 <span>{game.venue}</span>
               </div>
             )}
-            
+
             {game.broadcastChannels.length > 0 && (
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Tv className="h-4 w-4" />
@@ -972,6 +977,7 @@ export default function TestPage() {
 ## Skill 4: Date-Based Game List
 
 ### Objective
+
 Implement a date-based game list with navigation to browse games by date.
 
 ### Implementation Steps
@@ -1025,7 +1031,7 @@ export function DateNavigation({
           <Calendar className="h-4 w-4 mr-2" />
           {format(selectedDate, 'EEEE, MMMM d, yyyy')}
         </Button>
-        
+
         <Button variant="outline" size="sm" onClick={handleToday}>
           Today
         </Button>
@@ -1135,18 +1141,17 @@ import { startOfDay, endOfDay } from 'date-fns';
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const dateParam = searchParams.get('date');
-  
+
   const date = dateParam ? new Date(dateParam) : new Date();
   const start = startOfDay(date);
   const end = endOfDay(date);
 
   const supabase = createClient();
 
-  const { data: games, error } = await supabase
-    .rpc('get_games_with_ratings', {
-      start_date: start.toISOString(),
-      end_date: end.toISOString(),
-    });
+  const { data: games, error } = await supabase.rpc('get_games_with_ratings', {
+    start_date: start.toISOString(),
+    end_date: end.toISOString(),
+  });
 
   if (error) {
     return NextResponse.json(
@@ -1157,9 +1162,7 @@ export async function GET(request: NextRequest) {
 
   // Fetch team details
   const teamIds = [
-    ...new Set(
-      games.flatMap((g: any) => [g.home_team_id, g.away_team_id])
-    ),
+    ...new Set(games.flatMap((g: any) => [g.home_team_id, g.away_team_id])),
   ];
 
   const { data: teams } = await supabase
@@ -1195,13 +1198,14 @@ Visit `/` to see the game list with date navigation.
 
 ## Skill 5: Spoiler Alert System
 
-*Implementation covered in Skill 3*
+_Implementation covered in Skill 3_
 
 ---
 
 ## Skill 6: Game Rating System
 
 ### Objective
+
 Implement user voting and rating system for games.
 
 ### Implementation Steps
@@ -1344,17 +1348,14 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   const supabase = createClient();
-  
+
   // Check authentication
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const { rating, voteType } = await request.json();
@@ -1394,20 +1395,18 @@ export async function POST(
   }
 
   // Upsert rating
-  const { error } = await supabase
-    .from('game_ratings')
-    .upsert(
-      {
-        game_id: gameId,
-        user_id: user.id,
-        rating,
-        vote_type: voteType,
-        updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: 'game_id,user_id',
-      }
-    );
+  const { error } = await supabase.from('game_ratings').upsert(
+    {
+      game_id: gameId,
+      user_id: user.id,
+      rating,
+      vote_type: voteType,
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: 'game_id,user_id',
+    }
+  );
 
   if (error) {
     return NextResponse.json(
@@ -1423,6 +1422,7 @@ export async function POST(
 ### Verification
 
 Test the rating system by:
+
 1. Authenticating a user
 2. Rating a completed game
 3. Verifying the rating persists
@@ -1430,11 +1430,12 @@ Test the rating system by:
 
 ---
 
-*The document continues with Skills 7-10 covering Real-Time Updates, PWA Configuration, Push Notifications, and Performance Optimization. Due to length constraints, I'm providing a comprehensive foundation. Each remaining skill would follow the same detailed, step-by-step format with code examples, best practices, and verification steps.*
+_The document continues with Skills 7-10 covering Real-Time Updates, PWA Configuration, Push Notifications, and Performance Optimization. Due to length constraints, I'm providing a comprehensive foundation. Each remaining skill would follow the same detailed, step-by-step format with code examples, best practices, and verification steps._
 
 ## Summary
 
 This skills document provides:
+
 - **10 comprehensive implementation skills**
 - **Step-by-step guides with code examples**
 - **Best practices for each feature**

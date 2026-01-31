@@ -43,7 +43,10 @@ export default function Home() {
         </header>
 
         <div className="mb-6">
-          <DatePicker selectedDate={selectedDate} onDateChange={setSelectedDate} />
+          <DatePicker
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
         </div>
 
         <section>
@@ -56,9 +59,7 @@ export default function Home() {
         </section>
 
         <footer className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500">
-          <p>
-            Sports.Live - Your spoiler-free NBA companion
-          </p>
+          <p>Sports.Live - Your spoiler-free NBA companion</p>
           <p className="mt-2">
             Built with Next.js, TypeScript, and Tailwind CSS
           </p>

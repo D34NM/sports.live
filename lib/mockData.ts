@@ -18,7 +18,7 @@ export function generateMockGames(date: Date): GameSafe[] {
   for (let i = 0; i < numGames; i++) {
     const homeTeam = NBA_TEAMS[Math.floor(Math.random() * NBA_TEAMS.length)];
     let awayTeam = NBA_TEAMS[Math.floor(Math.random() * NBA_TEAMS.length)];
-    
+
     while (awayTeam.id === homeTeam.id) {
       awayTeam = NBA_TEAMS[Math.floor(Math.random() * NBA_TEAMS.length)];
     }
@@ -28,7 +28,7 @@ export function generateMockGames(date: Date): GameSafe[] {
 
     const now = new Date();
     let status: 'scheduled' | 'live' | 'final';
-    
+
     if (gameDate > now) {
       status = 'scheduled';
     } else if (gameDate.getTime() + 3 * 60 * 60 * 1000 > now.getTime()) {
@@ -45,9 +45,9 @@ export function generateMockGames(date: Date): GameSafe[] {
       gameDate: gameDate.toISOString(),
       status,
       venue: `${homeTeam.name} Arena`,
-      broadcasts: ['ESPN', 'TNT', 'ABC'][Math.floor(Math.random() * 3)] ? 
-        [['ESPN', 'TNT', 'ABC'][Math.floor(Math.random() * 3)]] : 
-        ['Local'],
+      broadcasts: ['ESPN', 'TNT', 'ABC'][Math.floor(Math.random() * 3)]
+        ? [['ESPN', 'TNT', 'ABC'][Math.floor(Math.random() * 3)]]
+        : ['Local'],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });

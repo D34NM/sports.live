@@ -96,7 +96,8 @@ export function GameCard({ game }: GameCardProps) {
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1">
               <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                {formatGameDate(game.gameDate)} • {formatGameTime(game.gameDate)}
+                {formatGameDate(game.gameDate)} •{' '}
+                {formatGameTime(game.gameDate)}
               </div>
               {getStatusBadge()}
             </div>
@@ -148,9 +149,12 @@ export function GameCard({ game }: GameCardProps) {
 
           {!isRevealed && game.status !== 'scheduled' && (
             <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-700 rounded-lg text-center">
-              <div className="text-lg font-semibold mb-2">⚠️ Spoiler Protected</div>
+              <div className="text-lg font-semibold mb-2">
+                ⚠️ Spoiler Protected
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                This game has ended or is in progress. Click below to reveal the score.
+                This game has ended or is in progress. Click below to reveal the
+                score.
               </p>
               <Button variant="primary" size="sm" onClick={handleRevealClick}>
                 Reveal Score
@@ -172,9 +176,9 @@ export function GameCard({ game }: GameCardProps) {
 
           {game.status === 'final' && (
             <div className="mt-4">
-              <GameRating 
-                gameId={game.id} 
-                initialRating={Math.random() * 4 + 5} 
+              <GameRating
+                gameId={game.id}
+                initialRating={Math.random() * 4 + 5}
                 totalVotes={Math.floor(Math.random() * 100) + 10}
               />
             </div>
@@ -191,8 +195,9 @@ export function GameCard({ game }: GameCardProps) {
         variant="danger"
       >
         <p className="text-gray-600 dark:text-gray-300">
-          Are you sure you want to see the score for this game? This action will reveal the
-          result and cannot be undone without manually hiding it again.
+          Are you sure you want to see the score for this game? This action will
+          reveal the result and cannot be undone without manually hiding it
+          again.
         </p>
       </Modal>
     </>
