@@ -79,7 +79,7 @@ Create `.github/workflows/fetch-games.yml`:
 name: Fetch NBA Games
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Every 10 minutes
+    - cron: '*/10 * * * *' # Every 10 minutes
   workflow_dispatch:
 
 jobs:

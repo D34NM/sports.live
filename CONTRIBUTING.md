@@ -15,7 +15,7 @@ Thank you for your interest in contributing to Sports.Live! This document provid
 2. Clone your fork: `git clone https://github.com/yourusername/sports.live.git`
 3. Install dependencies: `npm install`
 4. Create a branch: `git checkout -b feature/your-feature-name`
-5. Make your changes
+5. Make your changes (code is auto-formatted on commit)
 6. Test your changes: `npm run build` and `npm run lint`
 7. Commit your changes: `git commit -m "Add feature: description"`
 8. Push to your fork: `git push origin feature/your-feature-name`
@@ -24,17 +24,32 @@ Thank you for your interest in contributing to Sports.Live! This document provid
 ## Development Setup
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 - A code editor (VS Code recommended)
 - Basic knowledge of React, Next.js, and TypeScript
 
 ### Local Development
+
 ```bash
 npm install
 npm run dev
 ```
 
 Visit http://localhost:3000 to see your changes.
+
+## Code Formatting
+
+Code is automatically formatted on commit using Prettier and ESLint via pre-commit hooks.
+
+**Commands:**
+
+```bash
+npm run format        # Format all files
+npm run format:check  # Check formatting
+```
+
+**Editor Setup:** Install recommended extensions (Prettier, ESLint) when prompted in VS Code.
 
 ## Project Structure
 
@@ -54,24 +69,28 @@ sports.live/
 ## Coding Standards
 
 ### TypeScript
+
 - Use strict mode
 - Define proper types for all functions and components
 - Avoid `any` type unless absolutely necessary
 - Use interfaces for object shapes
 
 ### React Components
+
 - Use functional components with hooks
 - Keep components small and focused
 - Use meaningful component and prop names
 - Add JSDoc comments for complex components
 
 ### Styling
+
 - Use Tailwind CSS utility classes
 - Follow mobile-first approach
 - Ensure dark mode compatibility
 - Maintain consistent spacing and sizing
 
 ### Naming Conventions
+
 - Components: PascalCase (e.g., `GameCard.tsx`)
 - Files: PascalCase for components, camelCase for utilities
 - Functions: camelCase (e.g., `formatGameTime`)
@@ -89,6 +108,7 @@ type(scope): description
 ```
 
 Types:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -98,6 +118,7 @@ Types:
 - `chore`: Maintenance tasks
 
 Examples:
+
 ```
 feat(game-card): add save game button
 fix(spoiler): prevent score leak on mobile
@@ -117,23 +138,29 @@ docs(readme): update installation instructions
    - Screenshots for UI changes
 
 ### PR Template
+
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 How was this tested?
 
 ## Screenshots
+
 (if applicable)
 
 ## Checklist
+
 - [ ] Code follows project style guidelines
 - [ ] Self-reviewed my code
 - [ ] Commented complex code
@@ -145,6 +172,7 @@ How was this tested?
 ## Feature Requests
 
 Have an idea? Open an issue with:
+
 - Clear description of the feature
 - Use cases and benefits
 - Potential implementation approach
@@ -153,6 +181,7 @@ Have an idea? Open an issue with:
 ## Bug Reports
 
 Found a bug? Open an issue with:
+
 - Clear description of the bug
 - Steps to reproduce
 - Expected vs actual behavior
@@ -163,6 +192,7 @@ Found a bug? Open an issue with:
 ## Areas for Contribution
 
 ### High Priority
+
 - NBA API integration
 - Real-time game updates
 - User authentication
@@ -170,6 +200,7 @@ Found a bug? Open an issue with:
 - Performance optimization
 
 ### Good First Issues
+
 - UI improvements
 - Documentation updates
 - Additional test coverage
@@ -177,6 +208,7 @@ Found a bug? Open an issue with:
 - Bug fixes
 
 ### Advanced Features
+
 - Team pages
 - Advanced filtering
 - Game recommendations
@@ -186,11 +218,13 @@ Found a bug? Open an issue with:
 ## Testing
 
 Currently using:
+
 - Manual testing
 - Build verification
 - Linting checks
 
 Future testing:
+
 - Unit tests with Vitest
 - Integration tests
 - E2E tests with Playwright

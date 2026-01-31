@@ -9,7 +9,11 @@ interface GameRatingProps {
   totalVotes?: number;
 }
 
-export function GameRating({ gameId, initialRating = 0, totalVotes = 0 }: GameRatingProps) {
+export function GameRating({
+  gameId,
+  initialRating = 0,
+  totalVotes = 0,
+}: GameRatingProps) {
   const [averageRating, setAverageRating] = useState(initialRating);
   const [votes, setVotes] = useState(totalVotes);
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
@@ -29,13 +33,13 @@ export function GameRating({ gameId, initialRating = 0, totalVotes = 0 }: GameRa
     // Simulate vote
     const newVotes = votes + 1;
     const adjustment = voteType === 'up' ? 0.5 : -0.5;
-    const newRating = ((averageRating * votes) + (5 + adjustment)) / newVotes;
-    
+    const newRating = (averageRating * votes + (5 + adjustment)) / newVotes;
+
     setAverageRating(newRating);
     setVotes(newVotes);
     setUserVote(voteType);
     setHasVoted(true);
-    
+
     localStorage.setItem(`vote-${gameId}`, voteType);
   };
 
@@ -48,9 +52,13 @@ export function GameRating({ gameId, initialRating = 0, totalVotes = 0 }: GameRa
   return (
     <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
       <div className="flex-1">
-        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Game Rating</div>
+        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+          Game Rating
+        </div>
         <div className="flex items-baseline gap-2">
-          <span className={`text-2xl font-bold ${getRatingColor(averageRating)}`}>
+          <span
+            className={`text-2xl font-bold ${getRatingColor(averageRating)}`}
+          >
             {averageRating > 0 ? averageRating.toFixed(1) : '—'}
           </span>
           <span className="text-sm text-gray-500">/ 10</span>

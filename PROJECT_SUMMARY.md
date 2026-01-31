@@ -9,6 +9,7 @@ Sports.Live is inspired by wikihoops.com, designed to let NBA fans browse games 
 ## ✨ Implemented Features
 
 ### Core Functionality
+
 - **Date-based Game List**: Browse games by date with intuitive navigation
 - **Spoiler Protection**: Two-step confirmation before revealing scores
 - **Per-game Cards**: Display status, time, venue, and broadcast info
@@ -17,12 +18,14 @@ Sports.Live is inspired by wikihoops.com, designed to let NBA fans browse games 
 - **Dark Mode**: Automatic theme switching based on system preferences
 
 ### Progressive Web App (PWA)
+
 - **Service Worker**: Basic caching for offline support
 - **Install Prompt**: Encourages users to install the app
 - **Web Manifest**: Ready for add-to-home-screen
 - **Responsive Design**: Works seamlessly across all devices
 
 ### Developer Experience
+
 - **TypeScript**: Full type safety with strict mode
 - **Tailwind CSS**: Utility-first styling with dark mode
 - **Next.js 15**: Latest App Router with server components
@@ -76,12 +79,14 @@ sports.live/
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **Framework**: Next.js 15 with App Router
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS 3+ with @tailwindcss/postcss
 - **State**: React hooks + localStorage
 
 ### Backend (Ready to Integrate)
+
 - **Database**: Supabase (PostgreSQL)
 - **Real-time**: Supabase Realtime
 - **Auth**: Supabase Auth
@@ -89,6 +94,7 @@ sports.live/
 - **Storage**: Cloudflare R2 (optional)
 
 ### Deployment
+
 - **Hosting**: Vercel (recommended) or Cloudflare Pages
 - **CI/CD**: GitHub Actions
 - **Monitoring**: Vercel Analytics
@@ -153,11 +159,13 @@ npm start
 ## 🧪 Testing Strategy
 
 ### Current
+
 - Manual testing
 - Build verification
 - ESLint checks
 
 ### Planned
+
 - Unit tests (Vitest)
 - Integration tests
 - E2E tests (Playwright)
@@ -165,30 +173,33 @@ npm start
 
 ## 📝 Documentation
 
-| Document | Purpose |
-|----------|---------|
-| README.md | Project overview and quick start |
-| DEPLOYMENT.md | Detailed deployment guide |
-| CONTRIBUTING.md | How to contribute |
-| ACCESSIBILITY.md | Accessibility guidelines |
-| NBA_API_INTEGRATION.md | NBA data integration |
-| PROJECT_SUMMARY.md | This document |
+| Document               | Purpose                          |
+| ---------------------- | -------------------------------- |
+| README.md              | Project overview and quick start |
+| DEPLOYMENT.md          | Detailed deployment guide        |
+| CONTRIBUTING.md        | How to contribute                |
+| ACCESSIBILITY.md       | Accessibility guidelines         |
+| NBA_API_INTEGRATION.md | NBA data integration             |
+| PROJECT_SUMMARY.md     | This document                    |
 
 ## 🎯 Next Steps
 
 ### Immediate
+
 1. Set up Supabase project
 2. Configure environment variables
 3. Deploy to Vercel
 4. Test PWA installation
 
 ### Short Term
+
 1. Integrate NBA API
 2. Implement authentication
 3. Add saved games feature
 4. Enable real-time updates
 
 ### Long Term
+
 1. Team pages
 2. Advanced filtering
 3. Personalized recommendations

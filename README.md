@@ -5,6 +5,7 @@ A mobile-first, spoiler-free NBA web application built with Next.js, TypeScript,
 ## Features
 
 ### ✅ Implemented
+
 - **Date-based game list**: Browse games by date with an intuitive date picker
 - **Spoiler protection**: Scores are hidden by default with a confirmation dialog before revealing
 - **Per-game cards**: Display status, time, venue, and broadcast information
@@ -13,6 +14,7 @@ A mobile-first, spoiler-free NBA web application built with Next.js, TypeScript,
 - **PWA manifest**: Ready for Progressive Web App installation
 
 ### 🚧 Coming Soon
+
 - Game rating system (0-10 scale) with upvote/downvote
 - User authentication with Supabase
 - Saved games with bookmarks and notes
@@ -30,6 +32,7 @@ A mobile-first, spoiler-free NBA web application built with Next.js, TypeScript,
 - **State Management**: React hooks + localStorage
 
 ### Planned Integrations
+
 - **Database**: Supabase (Postgres + Realtime + Auth)
 - **Caching**: Upstash Redis (optional)
 - **Storage**: Cloudflare R2 for images
@@ -39,22 +42,26 @@ A mobile-first, spoiler-free NBA web application built with Next.js, TypeScript,
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ and npm
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/D34NM/sports.live.git
 cd sports.live
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Run the development server:
+
 ```bash
 npm run dev
 ```
@@ -67,6 +74,19 @@ npm run dev
 npm run build
 npm start
 ```
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Lint code with ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+
+### Code Formatting
+
+Code is automatically formatted on commit using Prettier and ESLint. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 ## Project Structure
 
@@ -115,6 +135,7 @@ The app implements a two-step spoiler protection:
 ## Development Roadmap
 
 ### Phase 1: Core Features ✅
+
 - [x] Next.js setup with TypeScript
 - [x] Tailwind CSS configuration
 - [x] Date-based game list
@@ -123,6 +144,7 @@ The app implements a two-step spoiler protection:
 - [x] PWA manifest
 
 ### Phase 2: Backend & Data
+
 - [ ] Supabase integration
 - [ ] Database schema setup
 - [ ] NBA API integration
@@ -130,6 +152,7 @@ The app implements a two-step spoiler protection:
 - [ ] Caching strategy
 
 ### Phase 3: User Features
+
 - [ ] Authentication (Supabase Auth)
 - [ ] Game rating system
 - [ ] Saved games functionality
@@ -137,6 +160,7 @@ The app implements a two-step spoiler protection:
 - [ ] Bookmarks and notes
 
 ### Phase 4: Real-time & PWA
+
 - [ ] Supabase Realtime subscriptions
 - [ ] Service worker
 - [ ] Offline support
@@ -144,6 +168,7 @@ The app implements a two-step spoiler protection:
 - [ ] Install prompt
 
 ### Phase 5: Advanced Features
+
 - [ ] Team pages
 - [ ] Advanced filters
 - [ ] Game recommendations

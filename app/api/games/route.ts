@@ -4,7 +4,8 @@ import { GameSafe } from '@/types/game';
 // GET /api/games?date=YYYY-MM-DD
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
+  const date =
+    searchParams.get('date') || new Date().toISOString().split('T')[0];
 
   // TODO: Replace with actual Supabase query
   // const games = await fetchGamesFromSupabase(date);

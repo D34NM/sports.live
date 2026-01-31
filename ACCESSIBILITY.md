@@ -17,6 +17,7 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 - Arrow keys for date navigation
 
 **Keyboard Shortcuts:**
+
 - `Tab` - Navigate forward through interactive elements
 - `Shift + Tab` - Navigate backward
 - `Enter/Space` - Activate buttons and links
@@ -33,6 +34,7 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 - Form labels properly associated with inputs
 
 **Screen Reader Testing:**
+
 - Tested with NVDA (Windows)
 - Tested with JAWS (Windows)
 - Tested with VoiceOver (macOS/iOS)
@@ -41,17 +43,20 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 ### 3. Visual Design
 
 **Color Contrast:**
+
 - Text contrast ratio: minimum 4.5:1 (WCAG AA)
 - Large text contrast ratio: minimum 3:1
 - Interactive element contrast: minimum 3:1
 - Don't rely solely on color to convey information
 
 **Dark Mode:**
+
 - Automatic detection via `prefers-color-scheme`
 - Maintains proper contrast in both themes
 - All colors tested for accessibility
 
 **Typography:**
+
 - Base font size: 16px
 - Readable line height: 1.5
 - Adequate spacing between elements
@@ -85,10 +90,7 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 ```tsx
 // Spoiler overlay has proper ARIA attributes
 <div role="region" aria-label="Spoiler protected content">
-  <button 
-    onClick={revealScore}
-    aria-label="Reveal game score"
-  >
+  <button onClick={revealScore} aria-label="Reveal game score">
     Reveal Score
   </button>
 </div>
@@ -98,11 +100,7 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 
 ```tsx
 // Modal has proper ARIA attributes
-<div
-  role="dialog"
-  aria-modal="true"
-  aria-labelledby="modal-title"
->
+<div role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <h2 id="modal-title">Spoiler Alert</h2>
   {/* Modal content */}
 </div>
@@ -135,12 +133,14 @@ We aim to meet WCAG 2.1 Level AA standards for all features.
 ### Automated Testing
 
 Tools used:
+
 - Lighthouse (Chrome DevTools)
 - axe DevTools
 - WAVE (Web Accessibility Evaluation Tool)
 - Pa11y
 
 Run automated tests:
+
 ```bash
 # Using Lighthouse CI
 npm run lighthouse
@@ -152,6 +152,7 @@ npm run test:a11y
 ### Screen Reader Testing
 
 Test with:
+
 - NVDA + Firefox (Windows)
 - JAWS + Chrome (Windows)
 - VoiceOver + Safari (macOS)
@@ -161,6 +162,7 @@ Test with:
 ## Known Issues
 
 Currently, there are no known accessibility issues. If you find one, please:
+
 1. Open a GitHub issue
 2. Include browser/AT information
 3. Describe the issue in detail
@@ -169,6 +171,7 @@ Currently, there are no known accessibility issues. If you find one, please:
 ## Accessibility Roadmap
 
 ### Current Priority
+
 - [x] Keyboard navigation
 - [x] ARIA labels and roles
 - [x] Color contrast compliance
@@ -177,6 +180,7 @@ Currently, there are no known accessibility issues. If you find one, please:
 - [ ] Automated accessibility tests
 
 ### Future Enhancements
+
 - [ ] Voice control support
 - [ ] High contrast mode
 - [ ] Font size adjustment controls
@@ -187,16 +191,19 @@ Currently, there are no known accessibility issues. If you find one, please:
 ## Resources
 
 ### WCAG Guidelines
+
 - [WCAG 2.1](https://www.w3.org/WAI/WCAG21/quickref/)
 - [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
 
 ### Testing Tools
+
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 - [axe DevTools](https://www.deque.com/axe/devtools/)
 - [WAVE](https://wave.webaim.org/)
 - [Color Contrast Checker](https://webaim.org/resources/contrastchecker/)
 
 ### Screen Readers
+
 - [NVDA](https://www.nvaccess.org/)
 - [JAWS](https://www.freedomscientific.com/products/software/jaws/)
 - [VoiceOver](https://www.apple.com/accessibility/voiceover/)
@@ -205,6 +212,7 @@ Currently, there are no known accessibility issues. If you find one, please:
 ## Contact
 
 For accessibility concerns or questions:
+
 - Open a GitHub issue with the `accessibility` label
 - Email: accessibility@sports.live (if available)
 

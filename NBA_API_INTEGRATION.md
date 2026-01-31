@@ -5,20 +5,24 @@ This guide covers integrating real NBA game data into Sports.Live.
 ## Available Data Sources
 
 ### 1. Official NBA Stats API (Unofficial)
+
 **Base URL**: `https://stats.nba.com/stats/`
 
 **Pros:**
+
 - Real-time data
 - Comprehensive statistics
 - Free to use
 
 **Cons:**
+
 - Unofficial and undocumented
 - No official support
 - May change without notice
 - Aggressive rate limiting
 
 **Key Endpoints:**
+
 ```
 GET https://stats.nba.com/stats/scoreboardv2
   ?GameDate=2026-01-31
@@ -32,6 +36,7 @@ GET https://stats.nba.com/stats/scoreboard
 ```
 
 **Headers Required:**
+
 ```javascript
 {
   'User-Agent': 'Mozilla/5.0',
@@ -41,18 +46,22 @@ GET https://stats.nba.com/stats/scoreboard
 ```
 
 ### 2. ESPN API
+
 **Base URL**: `https://site.api.espn.com/apis/site/v2/sports/basketball/nba/`
 
 **Pros:**
+
 - More stable than NBA Stats API
 - Better documented
 - Includes broadcast information
 
 **Cons:**
+
 - Less detailed statistics
 - Still unofficial
 
 **Key Endpoints:**
+
 ```
 GET https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard
   ?dates=20260131
@@ -64,19 +73,23 @@ GET https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary
 ```
 
 ### 3. The Odds API
+
 **Base URL**: `https://api.the-odds-api.com/v4/sports/basketball_nba/`
 
 **Pros:**
+
 - Official API with documentation
 - Reliable
 - Includes betting odds
 
 **Cons:**
+
 - Requires API key
 - Limited free tier (500 requests/month)
 - Paid plans required for production
 
 **Key Endpoints:**
+
 ```
 GET https://api.the-odds-api.com/v4/sports/basketball_nba/scores
   ?apiKey={your_key}
@@ -84,14 +97,17 @@ GET https://api.the-odds-api.com/v4/sports/basketball_nba/scores
 ```
 
 ### 4. BallDontLie API
+
 **Base URL**: `https://www.balldontlie.io/api/v1/`
 
 **Pros:**
+
 - Free and open
 - Good documentation
 - No API key required
 
 **Cons:**
+
 - Limited historical data
 - Basic statistics only
 - May not have real-time scores
@@ -110,7 +126,7 @@ export class NBAClient {
     this.baseUrl = 'https://stats.nba.com/stats/';
     this.headers = {
       'User-Agent': 'Mozilla/5.0',
-      'Referer': 'https://stats.nba.com/',
+      Referer: 'https://stats.nba.com/',
     };
   }
 
@@ -172,7 +188,7 @@ export function transformNBAGame(nbaGame: any): GameSafe {
     gameDate: nbaGame.gameDateTimeUTC,
     status: mapStatus(nbaGame.gameStatus),
     venue: nbaGame.arenaName,
-    broadcasts: nbaGame.broadcasters?.map(b => b.broadcastDisplay),
+    broadcasts: nbaGame.broadcasters?.map((b) => b.broadcastDisplay),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -194,7 +210,7 @@ Use GitHub Actions or Cloudflare Workers:
 name: Fetch NBA Games
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Every 10 minutes
+    - cron: '*/10 * * * *' # Every 10 minutes
 
 jobs:
   fetch:
@@ -221,19 +237,19 @@ let windowStart = Date.now();
 
 export async function rateLimitedFetch(url: string, options?: RequestInit) {
   const now = Date.now();
-  
+
   if (now - windowStart > RATE_LIMIT_WINDOW) {
     requestCount = 0;
     windowStart = now;
   }
-  
+
   if (requestCount >= MAX_REQUESTS) {
     const waitTime = RATE_LIMIT_WINDOW - (now - windowStart);
-    await new Promise(resolve => setTimeout(resolve, waitTime));
+    await new Promise((resolve) => setTimeout(resolve, waitTime));
     requestCount = 0;
     windowStart = Date.now();
   }
-  
+
   requestCount++;
   return fetch(url, options);
 }
@@ -266,15 +282,13 @@ export async function upsertGames(games: GameSafe[]) {
 
 ```typescript
 export async function updateGameScores(gameId: string, scores: GameScores) {
-  const { data, error } = await supabase
-    .from('game_scores')
-    .upsert({
-      game_id: gameId,
-      home_score: scores.homeScore,
-      away_score: scores.awayScore,
-      quarter: scores.quarter,
-      time_remaining: scores.timeRemaining,
-    });
+  const { data, error } = await supabase.from('game_scores').upsert({
+    game_id: gameId,
+    home_score: scores.homeScore,
+    away_score: scores.awayScore,
+    quarter: scores.quarter,
+    time_remaining: scores.timeRemaining,
+  });
 
   if (error) throw error;
   return data;
@@ -321,15 +335,15 @@ export async function fetchWithRetry(
 ): Promise<Response> {
   try {
     const response = await fetch(url, options);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
-    
+
     return response;
   } catch (error) {
     if (retries > 0) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return fetchWithRetry(url, options, retries - 1);
     }
     throw error;
@@ -365,7 +379,7 @@ export async function GET() {
     redis: await checkRedis(),
   };
 
-  const allHealthy = Object.values(checks).every(check => check.healthy);
+  const allHealthy = Object.values(checks).every((check) => check.healthy);
 
   return NextResponse.json(
     { checks, healthy: allHealthy },
