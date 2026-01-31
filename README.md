@@ -68,6 +68,37 @@ npm run build
 npm start
 ```
 
+## Testing
+
+This project has comprehensive test coverage including unit tests, e2e tests, and Lighthouse CI.
+
+### Running Tests
+
+```bash
+# Unit tests (Vitest)
+npm run test:unit
+
+# E2E tests (Playwright)
+npm run test:e2e
+
+# Lighthouse CI
+npm run lighthouse
+
+# All tests
+npm run test:all
+```
+
+For more details, see [TESTING.md](./TESTING.md).
+
+### Test Coverage
+
+- ✅ Unit tests for components and utilities
+- ✅ Integration tests for API routes
+- ✅ E2E tests for critical user flows
+- ✅ Lighthouse CI for performance and accessibility
+- ✅ Mock NBA API for testing without real data
+- ✅ Mock Supabase client for database testing
+
 ## Project Structure
 
 ```
