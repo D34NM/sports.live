@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { DatePicker } from '@/components/shared/DatePicker';
 import { GameList } from '@/components/game/GameList';
+import { PWAInstallPrompt } from '@/components/shared/PWAInstallPrompt';
 import { generateMockGames } from '@/lib/mockData';
 import { GameSafe } from '@/types/game';
 
@@ -10,6 +11,15 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [games, setGames] = useState<GameSafe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Register service worker for PWA
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -53,6 +63,8 @@ export default function Home() {
             Built with Next.js, TypeScript, and Tailwind CSS
           </p>
         </footer>
+
+        <PWAInstallPrompt />
       </div>
     </main>
   );
