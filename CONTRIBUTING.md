@@ -15,12 +15,11 @@ Thank you for your interest in contributing to Sports.Live! This document provid
 2. Clone your fork: `git clone https://github.com/yourusername/sports.live.git`
 3. Install dependencies: `npm install`
 4. Create a branch: `git checkout -b feature/your-feature-name`
-5. Make your changes
-6. Code will be automatically formatted on commit (via pre-commit hooks)
-7. Test your changes: `npm run build` and `npm run lint`
-8. Commit your changes: `git commit -m "Add feature: description"`
-9. Push to your fork: `git push origin feature/your-feature-name`
-10. Open a Pull Request
+5. Make your changes (code is auto-formatted on commit)
+6. Test your changes: `npm run build` and `npm run lint`
+7. Commit your changes: `git commit -m "Add feature: description"`
+8. Push to your fork: `git push origin feature/your-feature-name`
+9. Open a Pull Request
 
 ## Development Setup
 
@@ -41,75 +40,16 @@ Visit http://localhost:3000 to see your changes.
 
 ## Code Formatting
 
-This project uses **Prettier** for code formatting and **ESLint** for code quality. All formatting is automated and enforced via pre-commit hooks.
+Code is automatically formatted on commit using Prettier and ESLint via pre-commit hooks.
 
-### Automatic Formatting
-
-Code is automatically formatted when you commit using Husky and lint-staged. No manual action required!
-
-### Manual Formatting
-
-To format all files manually:
+**Commands:**
 
 ```bash
-npm run format
+npm run format        # Format all files
+npm run format:check  # Check formatting
 ```
 
-To check formatting without making changes:
-
-```bash
-npm run format:check
-```
-
-### Editor Setup
-
-#### VS Code (Recommended)
-
-1. Install recommended extensions when prompted (or manually):
-   - Prettier - Code formatter
-   - ESLint
-   - Tailwind CSS IntelliSense
-   - EditorConfig for VS Code
-
-2. Settings are pre-configured in `.vscode/settings.json`:
-   - Auto-format on save
-   - Auto-fix ESLint issues on save
-   - Use workspace TypeScript version
-
-#### Other Editors
-
-- Install Prettier and ESLint plugins for your editor
-- Configure to use project's `.prettierrc` and `eslint.config.mjs`
-- Enable format on save (optional but recommended)
-
-### Formatting Rules
-
-The project follows these conventions:
-
-- **Indentation**: 2 spaces
-- **Quotes**: Single quotes for JS/TS, double quotes for JSX
-- **Semicolons**: Always
-- **Line Length**: 80 characters (recommended)
-- **Trailing Commas**: ES5 style
-- **End of Line**: LF (Unix-style)
-
-See `.prettierrc` for full configuration.
-
-### Pre-commit Hooks
-
-When you commit, the following automatically runs:
-
-1. **lint-staged** stages your changes
-2. **ESLint** checks and fixes code issues
-3. **Prettier** formats the code
-4. If checks pass, commit proceeds
-5. If checks fail, fix issues and try again
-
-To bypass hooks (not recommended):
-
-```bash
-git commit --no-verify
-```
+**Editor Setup:** Install recommended extensions (Prettier, ESLint) when prompted in VS Code.
 
 ## Project Structure
 

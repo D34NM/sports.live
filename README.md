@@ -86,9 +86,7 @@ npm start
 
 ### Code Formatting
 
-This project uses **Prettier** for automatic code formatting and **ESLint** for code quality. Code is automatically formatted on commit via Husky pre-commit hooks.
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed setup and usage instructions.
+Code is automatically formatted on commit using Prettier and ESLint. See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 ## Project Structure
 
