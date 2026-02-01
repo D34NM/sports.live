@@ -28,40 +28,31 @@ Sports.Live is inspired by wikihoops.com, designed to let NBA fans browse games 
 
 - **TypeScript**: Full type safety with strict mode
 - **Tailwind CSS**: Utility-first styling with dark mode
-- **Next.js 15**: Latest App Router with server components
+- **SvelteKit 2**: Latest framework with Svelte 5 runes
 - **ESLint**: Code quality and consistency
-- **Git Hooks**: Pre-commit linting (ready to configure)
+- **Git Hooks**: Pre-commit linting with Husky
 
 ## 📁 Project Structure
 
 ```
 sports.live/
-├── app/                          # Next.js App Router
-│   ├── api/                     # API routes
-│   │   └── games/              # Games API endpoints
-│   ├── layout.tsx              # Root layout with metadata
-│   ├── page.tsx                # Home page
-│   └── globals.css             # Global styles
-├── components/
-│   ├── ui/                     # Base UI components
-│   │   ├── Button.tsx          # Reusable button component
-│   │   ├── Card.tsx            # Card components
-│   │   └── Modal.tsx           # Modal/dialog component
-│   ├── game/                   # Game-specific components
-│   │   ├── GameCard.tsx        # Individual game card with spoiler protection
-│   │   ├── GameList.tsx        # Grid of game cards
-│   │   └── GameRating.tsx      # Game rating with voting
-│   └── shared/                 # Shared components
-│       ├── DatePicker.tsx      # Date navigation
-│       └── PWAInstallPrompt.tsx # PWA install banner
-├── lib/
-│   ├── mockData.ts             # Mock NBA data generator
-│   └── pwa.ts                  # PWA utilities
-├── types/
-│   └── game.ts                 # TypeScript type definitions
-├── public/
-│   ├── manifest.json           # PWA manifest
-│   └── sw.js                   # Service worker
+├── src/
+│   ├── routes/                  # SvelteKit routes
+│   │   ├── +page.svelte        # Home page
+│   │   ├── +layout.svelte      # Root layout
+│   │   └── api/                # API endpoints
+│   ├── lib/
+│   │   ├── components/         # Svelte components
+│   │   │   ├── ui/            # Base UI components
+│   │   │   ├── game/          # Game-specific components
+│   │   │   └── shared/        # Shared components
+│   │   ├── types/             # TypeScript types
+│   │   └── mockData.ts        # Mock data generators
+│   ├── app.html                # HTML template
+│   ├── app.css                 # Global styles
+│   └── app.d.ts                # Type definitions
+├── static/
+│   └── manifest.json           # PWA manifest
 ├── supabase/
 │   └── schema.sql              # Database schema
 ├── .github/
@@ -80,10 +71,12 @@ sports.live/
 
 ### Frontend
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: SvelteKit 2 with Svelte 5 runes
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS 3+ with @tailwindcss/postcss
-- **State**: React hooks + localStorage
+- **State**: Svelte runes ($state, $derived, $effect) + localStorage
+- **Icons**: Lucide Svelte
+- **Build Tool**: Vite
 
 ### Backend (Ready to Integrate)
 
@@ -117,11 +110,11 @@ npm start
 
 ## 📊 Key Metrics
 
-- **Build Size**: ~106KB First Load JS
-- **Build Time**: ~2 seconds
-- **TypeScript**: 100% type coverage
-- **Components**: 11 reusable components
-- **API Routes**: 2 endpoints ready
+- **Build Size**: Optimized with Vite
+- **Build Time**: Fast with Vite's HMR
+- **TypeScript**: 100% type coverage with svelte-check
+- **Components**: Reusable Svelte components
+- **API Routes**: SvelteKit server endpoints (+server.ts)
 - **Documentation**: 6 comprehensive guides
 
 ## 🎨 Design Principles
@@ -136,17 +129,18 @@ npm start
 
 - **Row Level Security**: Database policies ready (Supabase)
 - **Environment Variables**: Secure configuration
-- **Input Validation**: Type-safe APIs
+- **Input Validation**: Type-safe APIs with Zod
 - **Rate Limiting**: Ready to implement
 - **CORS**: Configured for production
 
 ## 📈 Performance Optimizations
 
-- **Code Splitting**: Automatic with Next.js App Router
-- **Image Optimization**: Next.js Image component ready
-- **Static Generation**: Pre-rendered pages
+- **Code Splitting**: Automatic with SvelteKit
+- **Image Optimization**: Modern formats with proper loading
+- **Static Generation**: Pre-rendered pages with SvelteKit adapters
 - **Lazy Loading**: Components loaded on demand
 - **Caching**: Service worker + localStorage
+- **Reactive Compilation**: Svelte's compiler for optimal bundle size
 
 ## ♿ Accessibility Features
 

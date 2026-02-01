@@ -126,14 +126,14 @@ Build and maintain a production-ready NBA web app (similar to wikihoops.com) tha
 
 ### Frontend
 
-- **Framework**: Next.js 14+ (App Router)
+- **Framework**: SvelteKit 2+ (using Svelte 5 runes)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS 3+
-- **UI Components**: shadcn/ui or Radix UI primitives
-- **State Management**: React Context + Zustand (for complex state)
-- **Forms**: React Hook Form + Zod validation
-- **Icons**: Lucide React
-- **Animations**: Framer Motion (sparingly, for performance)
+- **UI Components**: Custom Svelte components
+- **State Management**: Svelte runes ($state, $derived, $effect)
+- **Forms**: Zod validation with Svelte bindings
+- **Icons**: Lucide Svelte
+- **Build Tool**: Vite
 
 ### Backend & Database
 
@@ -143,7 +143,7 @@ Build and maintain a production-ready NBA web app (similar to wikihoops.com) tha
   - Authentication (optional for saved games)
   - Row Level Security (RLS)
 - **Auth**: Supabase Auth (email, OAuth providers)
-- **API**: Next.js API routes + Server Actions
+- **API**: SvelteKit server endpoints (+server.ts)
 
 ### Data & Caching
 
@@ -166,10 +166,10 @@ Build and maintain a production-ready NBA web app (similar to wikihoops.com) tha
 
 ### Development Tools
 
-- **Package Manager**: pnpm (preferred) or npm
-- **Linting**: ESLint + Prettier
-- **Type Checking**: TypeScript strict mode
-- **Testing**: Vitest + Testing Library
+- **Package Manager**: npm
+- **Linting**: ESLint + Prettier + prettier-plugin-svelte
+- **Type Checking**: TypeScript strict mode + svelte-check
+- **Testing**: Vitest + Testing Library (Svelte)
 - **E2E Testing**: Playwright (for critical paths)
 - **Git Hooks**: Husky + lint-staged
 
@@ -179,26 +179,29 @@ Build and maintain a production-ready NBA web app (similar to wikihoops.com) tha
 
 ```
 sports.live/
-├── app/                      # Next.js App Router
-│   ├── (auth)/              # Auth-related routes
-│   ├── (main)/              # Main app routes
-│   │   ├── page.tsx         # Home (today's games)
-│   │   ├── games/           # Game details
-│   │   └── saved/           # Saved games
-│   ├── api/                 # API routes
-│   └── layout.tsx           # Root layout
-├── components/
-│   ├── ui/                  # Base UI components
-│   ├── game/                # Game-specific components
-│   └── shared/              # Shared components
-├── lib/
-│   ├── db/                  # Database queries
-│   ├── api/                 # External API clients
-│   ├── utils/               # Utility functions
-│   └── hooks/               # Custom React hooks
-├── types/                   # TypeScript types
-├── public/                  # Static assets
-└── supabase/               # Supabase config & migrations
+├── src/
+│   ├── routes/              # SvelteKit routes
+│   │   ├── (auth)/         # Auth-related routes
+│   │   ├── (main)/         # Main app routes
+│   │   │   ├── +page.svelte  # Home (today's games)
+│   │   │   ├── games/      # Game details
+│   │   │   └── saved/      # Saved games
+│   │   └── api/            # API routes (+server.ts)
+│   ├── lib/
+│   │   ├── components/     # Svelte components
+│   │   │   ├── ui/         # Base UI components
+│   │   │   ├── game/       # Game-specific components
+│   │   │   └── shared/     # Shared components
+│   │   ├── server/
+│   │   │   ├── db/         # Database queries
+│   │   │   └── api/        # External API clients
+│   │   ├── stores/         # Svelte stores for global state
+│   │   ├── utils/          # Utility functions
+│   │   └── types/          # TypeScript types
+│   ├── app.html            # HTML template
+│   └── app.css             # Global styles
+├── static/                 # Static assets
+└── supabase/              # Supabase config & migrations
 ```
 
 ### Database Schema (Supabase)
@@ -285,88 +288,97 @@ interface GameWithScores extends GameSafe {
   timeRemaining: string;
 }
 
-// Component pattern
-function GameCard({ game }: { game: GameSafe }) {
-  const [revealed, setRevealed] = useState(false);
-  const [scores, setScores] = useState<Scores | null>(null);
+// Component pattern (Svelte 5)
+<script lang="ts">
+  import { type GameSafe } from '$lib/types';
 
-  const revealScores = async () => {
+  let { game }: { game: GameSafe } = $props();
+  let revealed = $state(false);
+  let scores = $state<Scores | null>(null);
+
+  async function revealScores() {
     const confirmed = await showSpoilerAlert();
     if (confirmed) {
       const gameScores = await fetchScores(game.id);
-      setScores(gameScores);
-      setRevealed(true);
+      scores = gameScores;
+      revealed = true;
       localStorage.setItem(`revealed-${game.id}`, 'true');
     }
-  };
+  }
+</script>
 
-  return (
-    <Card>
-      {/* Always show safe content */}
-      <GameInfo game={game} />
+<Card>
+  <!-- Always show safe content -->
+  <GameInfo {game} />
 
-      {/* Conditionally show scores */}
-      {revealed ? (
-        <ScoreDisplay scores={scores} />
-      ) : (
-        <SpoilerOverlay onReveal={revealScores} />
-      )}
-    </Card>
-  );
-}
+  <!-- Conditionally show scores -->
+  {#if revealed}
+    <ScoreDisplay {scores} />
+  {:else}
+    <SpoilerOverlay onReveal={revealScores} />
+  {/if}
+</Card>
+```
 ```
 
 ### Performance Optimization
 
 1. **Image Optimization**
-   - Use Next.js Image component
-   - WebP format with PNG fallback
+   - Modern image formats (WebP, AVIF) with fallbacks
    - Lazy loading for off-screen content
    - Responsive images with srcset
+   - Proper width/height attributes
 
 2. **Code Splitting**
    - Dynamic imports for heavy components
-   - Route-based splitting (automatic with App Router)
+   - Route-based splitting (automatic with SvelteKit)
    - Lazy load modals and dialogs
 
 3. **Data Fetching**
-   - Server Components for initial data
-   - Streaming with Suspense
-   - SWR or React Query for client-side caching
+   - SvelteKit load functions for SSR data
+   - Streaming with SvelteKit
+   - Client-side caching with stores
    - Prefetch on hover for game details
 
 4. **Caching Strategy**
    - Redis cache for game lists (5-minute TTL)
-   - Static generation for team pages
-   - ISR for game archives (revalidate daily)
+   - Static generation for team pages with adapters
+   - Incremental updates for game archives
    - Client-side cache with stale-while-revalidate
 
 ### Real-Time Updates
 
 ```typescript
-// Supabase Realtime subscription
-useEffect(() => {
-  const channel = supabase
-    .channel('game-updates')
-    .on(
-      'postgres_changes',
-      {
-        event: 'UPDATE',
-        schema: 'public',
-        table: 'games',
-        filter: `game_date=gte.${today}`,
-      },
-      (payload) => {
-        // Update game status without revealing scores
-        updateGameStatus(payload.new.id, payload.new.status);
-      }
-    )
-    .subscribe();
+// Supabase Realtime subscription (Svelte 5)
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { supabase } from '$lib/supabase';
 
-  return () => {
-    supabase.removeChannel(channel);
-  };
-}, [today]);
+  let { today } = $props();
+
+  onMount(() => {
+    const channel = supabase
+      .channel('game-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'games',
+          filter: `game_date=gte.${today}`,
+        },
+        (payload) => {
+          // Update game status without revealing scores
+          updateGameStatus(payload.new.id, payload.new.status);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  });
+</script>
 ```
 
 ### Accessibility Requirements
@@ -400,9 +412,9 @@ useEffect(() => {
 ### Phase 1: Foundation (Week 1-2)
 
 1. **Project Setup**
-   - Initialize Next.js project with TypeScript
+   - Initialize SvelteKit project with TypeScript
    - Configure Tailwind CSS
-   - Set up ESLint and Prettier
+   - Set up ESLint, Prettier, and prettier-plugin-svelte
    - Create repository structure
 
 2. **Database Setup**
@@ -519,7 +531,7 @@ useEffect(() => {
 
 - Graceful degradation for failed requests
 - User-friendly error messages
-- Error boundaries for React components
+- Error handling with try-catch blocks
 - Logging for debugging (avoid PII)
 - Retry logic for transient failures
 
@@ -614,7 +626,7 @@ useEffect(() => {
 
 Always communicate in a casual, friendly, yet professional manner:
 
-- "Setting up the Next.js project with TypeScript..."
+- "Setting up the SvelteKit project with TypeScript..."
 - "Got the Supabase database schema ready to go!"
 - "Let's add the spoiler protection modal now."
 - "Running tests to make sure everything works correctly."

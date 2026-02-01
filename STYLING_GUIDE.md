@@ -15,7 +15,7 @@ This document describes the styling implementation and icon usage in the Sports.
 
 ### Library
 
-We use [Lucide React](https://lucide.dev/) for all icons. Lucide provides:
+We use [Lucide Svelte](https://lucide.dev/) for all icons. Lucide provides:
 
 - Consistent design language
 - Customizable size and color
@@ -57,7 +57,7 @@ We use [Lucide React](https://lucide.dev/) for all icons. Lucide provides:
 
 ### TeamIcon Component
 
-Located in `components/game/TeamIcon.tsx`
+Located in `lib/components/game/TeamIcon.svelte`
 
 **Features:**
 
@@ -68,13 +68,13 @@ Located in `components/game/TeamIcon.tsx`
 
 **Usage:**
 
-```tsx
+```svelte
 <TeamIcon teamAbbreviation="LAL" teamName="Los Angeles Lakers" size="lg" />
 ```
 
 ### PlayerStatsTable Component
 
-Located in `components/game/PlayerStatsTable.tsx`
+Located in `lib/components/game/PlayerStatsTable.svelte`
 
 **Features:**
 
@@ -93,7 +93,7 @@ Located in `components/game/PlayerStatsTable.tsx`
 
 ### GameCard Component
 
-Located in `components/game/GameCard.tsx`
+Located in `lib/components/game/GameCard.svelte`
 
 **Enhanced Features:**
 
@@ -113,7 +113,7 @@ Located in `components/game/GameCard.tsx`
 
 ### DatePicker Component
 
-Located in `components/shared/DatePicker.tsx`
+Located in `lib/components/shared/DatePicker.svelte`
 
 **Features:**
 
@@ -246,10 +246,19 @@ Generated via `lib/mockPlayerStats.ts`
 
 ### Adding New Icons
 
-1. Import from lucide-react
+1. Import from lucide-svelte
 2. Use consistent sizing (`w-4 h-4` to `w-6 h-6`)
 3. Apply appropriate color classes
 4. Add descriptive title/aria-label
+
+Example:
+```svelte
+<script>
+  import { Calendar } from 'lucide-svelte';
+</script>
+
+<Calendar class="w-5 h-5" aria-label="Calendar icon" />
+```
 
 ### Styling New Components
 
@@ -264,7 +273,7 @@ Generated via `lib/mockPlayerStats.ts`
 - Icons are tree-shaken (only imported ones included)
 - Gradients used sparingly
 - Animations respect `prefers-reduced-motion`
-- Images optimized via Next.js Image component
+- Images optimized with modern formats and lazy loading
 
 ## Future Enhancements
 
@@ -281,5 +290,5 @@ Potential improvements:
 
 - [Lucide Icons](https://lucide.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Next.js Image](https://nextjs.org/docs/api-reference/next/image)
+- [SvelteKit Docs](https://kit.svelte.dev/)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)

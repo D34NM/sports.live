@@ -332,8 +332,8 @@ The same date always generates the same games:
 
 ```bash
 # These will always return the same games
-curl 'http://localhost:3000/api/games?date=2026-01-25'
-curl 'http://localhost:3000/api/games?date=2026-01-25'
+curl 'http://localhost:5173/api/games?date=2026-01-25'
+curl 'http://localhost:5173/api/games?date=2026-01-25'
 ```
 
 ### Date Ranges
@@ -341,7 +341,7 @@ curl 'http://localhost:3000/api/games?date=2026-01-25'
 Generate historical data for analysis:
 
 ```typescript
-import { generateHistoricalGames } from '@/lib/mockData';
+import { generateHistoricalGames } from '$lib/mockData';
 
 const startDate = new Date('2026-01-01');
 const endDate = new Date('2026-01-31');
@@ -354,7 +354,7 @@ const allGames = generateHistoricalGames(startDate, endDate);
 Use predefined fixtures for specific tests:
 
 ```typescript
-import { RIVALRY_GAME_FINAL, OVERTIME_GAME } from '@/lib/mockFixtures';
+import { RIVALRY_GAME_FINAL, OVERTIME_GAME } from '$lib/mockFixtures';
 
 // Test with known data
 expect(RIVALRY_GAME_FINAL.homeTeam.name).toBe('Boston Celtics');

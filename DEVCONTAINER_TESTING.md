@@ -7,7 +7,7 @@ This guide helps you test the Sports.Live application in the devcontainer enviro
 1. Open the project in VS Code
 2. Reopen in Container (when prompted)
 3. Open terminal and run: `npm run dev`
-4. Navigate to [http://localhost:3000](http://localhost:3000)
+4. Navigate to [http://localhost:5173](http://localhost:5173)
 
 ## Testing Mock Data
 
@@ -59,13 +59,13 @@ Test the API endpoints directly:
 
 ```bash
 # Get today's games
-curl http://localhost:3000/api/games | jq '.'
+curl http://localhost:5173/api/games | jq '.'
 
 # Get games for a specific date
-curl 'http://localhost:3000/api/games?date=2026-01-25' | jq '.'
+curl 'http://localhost:5173/api/games?date=2026-01-25' | jq '.'
 
 # Get scores for a game
-curl 'http://localhost:3000/api/games/game-2026-01-25-0/scores' | jq '.'
+curl 'http://localhost:5173/api/games/game-2026-01-25-0/scores' | jq '.'
 ```
 
 ## Expected Mock Data Patterns
@@ -288,7 +288,7 @@ npm --version
 
 ## Resources
 
-- [Next.js Documentation](https://nextjs.org/docs)
+- [SvelteKit Documentation](https://kit.svelte.dev/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 - [Dev Containers Documentation](https://code.visualstudio.com/docs/devcontainers/containers)
