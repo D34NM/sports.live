@@ -1,21 +1,53 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'plugin:prettier/recommended'),
-  {
-    rules: {
-      'prettier/prettier': 'error',
-    },
-  },
+export default [
+js.configs.recommended,
+...tseslint.configs.recommended,
+...svelte.configs['flat/recommended'],
+prettierConfig,
+{
+files: ['**/*.{js,mjs,cjs,ts,svelte}'],
+plugins: {
+prettier
+},
+languageOptions: {
+globals: {
+...globals.browser,
+...globals.node
+},
+parserOptions: {
+extraFileExtensions: ['.svelte']
+}
+},
+rules: {
+'prettier/prettier': 'warn',
+'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+			'svelte/prefer-svelte-reactivity': 'off'
+}
+},
+{
+files: ['**/*.svelte'],
+languageOptions: {
+parserOptions: {
+parser: tseslint.parser
+}
+}
+},
+{
+ignores: [
+'.svelte-kit/**',
+'build/**',
+'dist/**',
+'node_modules/**',
+'package-lock.json',
+'.next/**',
+'app/**',
+'components/**'
+]
+}
 ];
-
-export default eslintConfig;
