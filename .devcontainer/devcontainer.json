@@ -43,7 +43,7 @@
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postStartCommand": "echo '🏀 Sports.Live development environment is ready! Run: npm run dev'",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
