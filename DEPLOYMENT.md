@@ -40,21 +40,23 @@ This guide covers deploying Sports.Live to production with Vercel and Supabase.
 2. Click "Add New Project"
 3. Import your GitHub repository
 4. Configure the project:
-   - Framework Preset: Next.js
+   - Framework Preset: SvelteKit
    - Root Directory: `./`
    - Build Command: `npm run build`
-   - Output Directory: `.next`
+   - Output Directory: `.svelte-kit` (auto-detected)
 
 ### Configure Environment Variables
 
 Add the following environment variables in Vercel:
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+PUBLIC_SUPABASE_URL=your_supabase_project_url
+PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-NEXT_PUBLIC_APP_URL=https://yourdomain.com
+PUBLIC_APP_URL=https://yourdomain.com
 ```
+
+Note: In SvelteKit, environment variables prefixed with `PUBLIC_` are exposed to the client.
 
 ### Deploy
 
@@ -223,4 +225,4 @@ If something goes wrong:
 
 - Vercel Docs: https://vercel.com/docs
 - Supabase Docs: https://supabase.com/docs
-- Next.js Docs: https://nextjs.org/docs
+- SvelteKit Docs: https://kit.svelte.dev/docs

@@ -27,7 +27,7 @@ Thank you for your interest in contributing to Sports.Live! This document provid
 
 - Node.js 18+ and npm
 - A code editor (VS Code recommended)
-- Basic knowledge of React, Next.js, and TypeScript
+- Basic knowledge of Svelte, SvelteKit, and TypeScript
 
 ### Local Development
 
@@ -36,7 +36,7 @@ npm install
 npm run dev
 ```
 
-Visit http://localhost:3000 to see your changes.
+Visit http://localhost:5173 to see your changes.
 
 ## Code Formatting
 
@@ -55,14 +55,15 @@ npm run format:check  # Check formatting
 
 ```
 sports.live/
-├── app/              # Next.js App Router pages
-├── components/       # React components
-│   ├── ui/          # Base UI components
-│   ├── game/        # Game-specific components
-│   └── shared/      # Shared components
-├── lib/             # Utility functions and helpers
-├── types/           # TypeScript type definitions
-├── public/          # Static assets
+├── src/
+│   ├── routes/      # SvelteKit routes
+│   ├── lib/
+│   │   ├── components/  # Svelte components
+│   │   │   ├── ui/      # Base UI components
+│   │   │   ├── game/    # Game-specific components
+│   │   │   └── shared/  # Shared components
+│   │   └── types/   # TypeScript type definitions
+├── static/          # Static assets
 └── supabase/        # Database schema and migrations
 ```
 
@@ -75,12 +76,13 @@ sports.live/
 - Avoid `any` type unless absolutely necessary
 - Use interfaces for object shapes
 
-### React Components
+### Svelte Components
 
-- Use functional components with hooks
+- Use Svelte 5 runes ($state, $derived, $effect)
 - Keep components small and focused
 - Use meaningful component and prop names
 - Add JSDoc comments for complex components
+- Prefer reactive declarations over imperative effects
 
 ### Styling
 
@@ -91,10 +93,11 @@ sports.live/
 
 ### Naming Conventions
 
-- Components: PascalCase (e.g., `GameCard.tsx`)
+- Components: PascalCase (e.g., `GameCard.svelte`)
 - Files: PascalCase for components, camelCase for utilities
 - Functions: camelCase (e.g., `formatGameTime`)
 - Constants: UPPER_SNAKE_CASE (e.g., `NBA_TEAMS`)
+- Routes: Lowercase with hyphens (e.g., `+page.svelte`, `+server.ts`)
 
 ## Commit Messages
 
