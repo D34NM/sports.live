@@ -41,11 +41,24 @@ A mobile-first, spoiler-free NBA web application built with Next.js, TypeScript,
 
 ## Getting Started
 
-### Prerequisites
+### Option 1: Dev Container (Recommended)
 
-- Node.js 18+ and npm
+The easiest way to get started is using the included dev container:
 
-### Installation
+1. **Prerequisites**: Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [VS Code](https://code.visualstudio.com/) with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Open the project in VS Code
+3. Click "Reopen in Container" when prompted
+4. Wait for the container to build
+5. Run `npm run dev` in the terminal
+6. Open [http://localhost:3000](http://localhost:3000)
+
+See [.devcontainer/README.md](.devcontainer/README.md) for detailed instructions and troubleshooting.
+
+### Option 2: Local Installation
+
+If you prefer to run locally without Docker:
+
+**Prerequisites**: Node.js 18+ and npm
 
 1. Clone the repository:
 
@@ -77,12 +90,63 @@ npm start
 
 ### Available Scripts
 
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server with hot reload
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Lint code with ESLint
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check code formatting
+
+## Mock Data System
+
+The app currently uses a comprehensive mock data system for development and preview:
+
+### Features
+
+- **30 NBA teams** from all divisions (Eastern & Western Conference)
+- **Deterministic scheduling** - same date always generates same games
+- **Realistic game times** - 7:00 PM - 10:30 PM ET
+- **Various game statuses** - scheduled, live, and final games
+- **Broadcasting info** - ESPN, TNT, ABC, NBA TV, League Pass, Local
+- **Historical data** - browse any date and see appropriate game schedules
+
+### Game Status Logic
+
+- **Scheduled**: Game hasn't started yet (no spoiler protection needed)
+- **Live**: Game is currently in progress (scores hidden by default)
+- **Final**: Game has ended (scores hidden by default)
+
+### Testing Scenarios
+
+The mock system includes several pre-defined scenarios in `lib/mockFixtures.ts`:
+
+- Rivalry games (Lakers vs Celtics)
+- Overtime thrillers
+- Live games in progress
+- High-scoring shootouts
+- Low-scoring defensive battles
+- Blowout games
+
+### API Endpoints
+
+Mock data is served through Next.js API routes:
+
+```typescript
+// Get games for a specific date
+GET /api/games?date=YYYY-MM-DD
+
+// Get scores for a game (requires explicit reveal)
+GET /api/games/[id]/scores
+```
+
+### Switching to Real Data
+
+When ready to integrate real NBA data:
+
+1. Set up Supabase database (see `supabase/` directory)
+2. Configure environment variables (see `.env.example`)
+3. Replace mock data calls in API routes with Supabase queries
+4. Set up cron jobs for data fetching (see `NBA_API_INTEGRATION.md`)
 
 ### Code Formatting
 

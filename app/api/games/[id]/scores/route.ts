@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { GameScores } from '@/types/game';
+import { generateMockScores } from '@/lib/mockData';
 
 // GET /api/games/[id]/scores
 export async function GET(
@@ -8,16 +8,18 @@ export async function GET(
 ) {
   const { id } = await context.params;
 
-  // TODO: Replace with actual Supabase query
-  // const scores = await fetchScoresFromSupabase(id);
+  // Extract status from game ID if available (format: game-YYYY-MM-DD-index)
+  // For mock purposes, randomly determine if it's live or final
+  const isLive = id.includes('-0') || id.includes('-2') || id.includes('-4');
+  const status = isLive ? 'live' : 'final';
 
-  // Mock response for now
-  const mockScores: GameScores = {
-    homeScore: Math.floor(Math.random() * 130) + 70,
-    awayScore: Math.floor(Math.random() * 130) + 70,
-    quarter: 'Final',
-    timeRemaining: undefined,
-  };
+  // Generate mock scores
+  // TODO: Replace with actual Supabase query when integration is ready
+  const scores = generateMockScores(id, status);
 
-  return NextResponse.json({ scores: mockScores, gameId: id });
+  return NextResponse.json({
+    gameId: id,
+    scores,
+    lastUpdated: new Date().toISOString(),
+  });
 }
