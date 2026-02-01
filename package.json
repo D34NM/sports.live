@@ -13,7 +13,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "next": "^15.1.6",
+    "next": "^15.5.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -43,5 +43,9 @@
     "*.{json,css,scss,md}": [
       "prettier --write"
     ]
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "15.5.11",
+    "@next/swc-linux-x64-musl": "15.5.11"
   }
 }
