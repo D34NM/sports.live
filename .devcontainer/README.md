@@ -133,6 +133,7 @@ The development environment uses comprehensive mock data for preview and testing
 ### Testing Different Scenarios
 
 Use the date picker in the app to browse:
+
 - **Past dates**: All games show as "final"
 - **Today**: Mix of scheduled, live, and final games
 - **Future dates**: All games show as "scheduled"

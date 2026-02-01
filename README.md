@@ -119,6 +119,7 @@ The app currently uses a comprehensive mock data system for development and prev
 ### Testing Scenarios
 
 The mock system includes several pre-defined scenarios in `lib/mockFixtures.ts`:
+
 - Rivalry games (Lakers vs Celtics)
 - Overtime thrillers
 - Live games in progress

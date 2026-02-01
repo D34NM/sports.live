@@ -227,16 +227,16 @@ export const ALL_FIXTURES: GameSafe[] = [
  * Get scores for a fixture by ID
  */
 export function getFixtureScores(gameId: string): GameScores | null {
-  const game = ALL_FIXTURES.find(g => g.id === gameId);
+  const game = ALL_FIXTURES.find((g) => g.id === gameId);
   if (!game) return null;
-  
+
   if ('scores' in game) {
     return (game as GameWithScores).scores;
   }
-  
+
   if (game.id === LIVE_GAME_3RD_QUARTER.id) {
     return LIVE_GAME_3RD_QUARTER_SCORES;
   }
-  
+
   return null;
 }
