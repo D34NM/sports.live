@@ -1,38 +1,29 @@
 import { NextResponse } from 'next/server';
-import { GameSafe } from '@/types/game';
+import { generateMockGames } from '@/lib/mockData';
 
 // GET /api/games?date=YYYY-MM-DD
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const date =
-    searchParams.get('date') || new Date().toISOString().split('T')[0];
-
-  // TODO: Replace with actual Supabase query
-  // const games = await fetchGamesFromSupabase(date);
-
-  // Mock response for now
-  const mockGames: GameSafe[] = [
-    {
-      id: '1',
-      nbaGameId: 'nba-123',
-      homeTeam: {
-        id: '1',
-        name: 'Los Angeles Lakers',
-        abbreviation: 'LAL',
-      },
-      awayTeam: {
-        id: '2',
-        name: 'Boston Celtics',
-        abbreviation: 'BOS',
-      },
-      gameDate: new Date(date + 'T19:00:00Z').toISOString(),
-      status: 'scheduled',
-      venue: 'Crypto.com Arena',
-      broadcasts: ['ESPN', 'NBA TV'],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ];
-
-  return NextResponse.json({ games: mockGames, date });
+  const dateParam = searchParams.get('date');
+  
+  // Parse date or use today
+  const date = dateParam ? new Date(dateParam) : new Date();
+  
+  // Validate date
+  if (isNaN(date.getTime())) {
+    return NextResponse.json(
+      { error: 'Invalid date format. Use YYYY-MM-DD' },
+      { status: 400 }
+    );
+  }
+  
+  // Generate mock games for the date
+  // TODO: Replace with actual Supabase query when integration is ready
+  const games = generateMockGames(date);
+  
+  return NextResponse.json({
+    games,
+    date: date.toISOString().split('T')[0],
+    count: games.length,
+  });
 }
