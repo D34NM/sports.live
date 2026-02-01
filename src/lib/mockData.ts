@@ -1,4 +1,4 @@
-import { GameSafe, GameScores, Team } from '$lib/types/game';
+import type { GameSafe, GameScores, Team } from '$lib/types/game';
 
 // Comprehensive NBA teams data
 const NBA_TEAMS: Team[] = [

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { onDestroy } from 'svelte';
 	import Button from './Button.svelte';
 
@@ -10,7 +11,7 @@
 		confirmText?: string;
 		cancelText?: string;
 		variant?: 'primary' | 'danger';
-		children?: unknown;
+		children?: Snippet;
 	}
 
 	let {
@@ -38,13 +39,18 @@
 </script>
 
 {#if isOpen}
+	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
 		onclick={onClose}
+		onkeydown={(e) => e.key === 'Escape' && onClose()}
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="modal-title"
+		tabindex="0"
 	>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
 			onclick={(e) => e.stopPropagation()}
@@ -54,7 +60,9 @@
 					{title}
 				</h2>
 				<div class="mb-6">
-					{@render children?.()}
+					{#if children}
+						{@render children()}
+					{/if}
 				</div>
 				<div class="flex gap-3 justify-end">
 					<Button variant="secondary" onclick={onClose}>

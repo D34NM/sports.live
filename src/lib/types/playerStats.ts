@@ -9,6 +9,7 @@ export interface PlayerStats {
 	steals: number;
 	blocks: number;
 	fouls: number;
+	turnovers: number;
 	minutes: string;
 	fieldGoalsMade: number;
 	fieldGoalsAttempted: number;

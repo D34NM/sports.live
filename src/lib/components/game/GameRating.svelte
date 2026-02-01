@@ -11,12 +11,14 @@
 
 	let { gameId, initialRating = 0, totalVotes = 0 }: Props = $props();
 
-	let averageRating = $state(initialRating);
-	let votes = $state(totalVotes);
+	let averageRating = $state(0);
+	let votes = $state(0);
 	let userVote = $state<'up' | 'down' | null>(null);
 	let hasVoted = $state(false);
 
 	onMount(() => {
+		averageRating = initialRating;
+		votes = totalVotes;
 		const voted = localStorage.getItem(`vote-${gameId}`);
 		if (voted) {
 			userVote = voted as 'up' | 'down';

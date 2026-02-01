@@ -56,8 +56,10 @@
 		SAS: 'bg-gray-700 text-white',
 	};
 
-	const colorClass = teamColors[teamAbbreviation] || 'bg-gray-600 text-white';
-	const sizeClass = sizeMap[size];
+	const colorClass = $derived(
+		teamColors[teamAbbreviation] || 'bg-gray-600 text-white'
+	);
+	const sizeClass = $derived(sizeMap[size]);
 </script>
 
 <div

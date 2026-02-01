@@ -1,4 +1,4 @@
-import { PlayerStats, GamePlayerStats } from '$lib/types/playerStats';
+import type { PlayerStats, GamePlayerStats } from '$lib/types/playerStats';
 
 const POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C'];
 
@@ -104,6 +104,7 @@ function generatePlayerStats(
 			: Math.floor((seed % 2) * scoringMultiplier);
 
 	const fouls = Math.floor((seed % 5) * scoringMultiplier);
+	const turnovers = Math.floor((seed % 4) * scoringMultiplier);
 
 	return {
 		playerId: `${teamAbbr}-player-${index}`,
@@ -116,6 +117,7 @@ function generatePlayerStats(
 		steals,
 		blocks,
 		fouls: Math.min(fouls, 6), // Max 6 fouls
+		turnovers: Math.min(turnovers, 8), // Max 8 turnovers
 		minutes,
 		fieldGoalsMade: fgMade,
 		fieldGoalsAttempted: fgAttempted,

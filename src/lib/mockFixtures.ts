@@ -3,7 +3,7 @@
  * Provides various game scenarios for comprehensive testing
  */
 
-import { GameSafe, GameScores, GameWithScores } from '$lib/types/game';
+import type { GameSafe, GameScores, GameWithScores } from '$lib/types/game';
 
 /**
  * Classic rivalry game - Lakers vs Celtics

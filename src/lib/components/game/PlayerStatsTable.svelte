@@ -89,7 +89,7 @@
 								({player.fieldGoalsMade}/{player.fieldGoalsAttempted})
 							</span>
 						</div>
-						<div class="col-span-2 text-center">{player.minutesPlayed}</div>
+						<div class="col-span-2 text-center">{player.minutes}</div>
 					</button>
 
 					{#if expandedPlayer === player.playerId}
@@ -129,7 +129,7 @@
 									<div class="text-xs text-gray-500 dark:text-gray-400">
 										Fouls
 									</div>
-									<div class="font-semibold">{player.personalFouls}</div>
+									<div class="font-semibold">{player.fouls}</div>
 								</div>
 							</div>
 						</div>

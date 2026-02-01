@@ -5,6 +5,13 @@
 
 echo "🏀 Welcome to Sports.Live Development Environment!"
 echo ""
+
+# Configure Git for consistent line endings
+echo "Configuring Git..."
+git config --global core.autocrlf input
+git config --global core.eol lf
+git config --global core.safecrlf false
+
 echo "Installing dependencies..."
 npm install
 
