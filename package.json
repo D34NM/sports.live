@@ -45,7 +45,7 @@
     ]
   },
   "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "15.5.11",
+    "@next/swc-linux-x64-gnu": "^15.0.3",
     "@next/swc-linux-x64-musl": "15.5.11"
   }
 }
