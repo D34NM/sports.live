@@ -23,7 +23,7 @@ A development container (devcontainer) is a fully-featured development environme
    ```bash
    npm run dev
    ```
-6. Open [http://localhost:3000](http://localhost:3000) in your browser
+6. Open [http://localhost:5173](http://localhost:5173) in your browser
 
 ### Option 2: Using GitHub Codespaces
 
@@ -32,7 +32,7 @@ A development container (devcontainer) is a fully-featured development environme
 3. Click **Create codespace on main** (or your branch)
 4. Wait for the environment to initialize
 5. Run `npm run dev` in the terminal
-6. The app will be available on port 3000
+6. The app will be available on port 5173
 
 ## What's Included
 
@@ -42,16 +42,16 @@ The development container includes:
 - **TypeScript** support
 - **Git** and **GitHub CLI**
 - **VS Code Extensions**:
+  - Svelte for VS Code
   - Prettier (code formatting)
   - ESLint (linting)
   - Tailwind CSS IntelliSense
   - EditorConfig
-  - TypeScript Next
 
 ## Features
 
 - ✅ Automatic dependency installation on container creation
-- ✅ Port forwarding for Next.js dev server (port 3000)
+- ✅ Port forwarding for SvelteKit dev server (port 5173)
 - ✅ Pre-configured VS Code settings (formatting, linting)
 - ✅ Consistent environment across all development machines
 - ✅ No need to install Node.js or other tools locally
@@ -89,6 +89,7 @@ Add extension IDs to the `extensions` array:
 
 ```json
 "extensions": [
+  "svelte.svelte-vscode",
   "esbenp.prettier-vscode",
   "dbaeumer.vscode-eslint"
 ]
@@ -102,10 +103,10 @@ Add extension IDs to the `extensions` array:
 2. Check Docker Desktop logs for errors
 3. Try: `F1` → **Dev Containers: Rebuild Container**
 
-### Port 3000 Already in Use
+### Port 5173 Already in Use
 
-1. Stop any local Next.js servers
-2. Check for other applications using port 3000
+1. Stop any local SvelteKit servers
+2. Check for other applications using port 5173
 3. Modify the port in `devcontainer.json` if needed
 
 ### Performance Issues
@@ -140,7 +141,7 @@ Use the date picker in the app to browse:
 
 ### API Endpoints
 
-Mock data is served through Next.js API routes:
+Mock data is served through SvelteKit server endpoints:
 
 - `GET /api/games?date=YYYY-MM-DD` - Get games for a specific date
 - `GET /api/games/[id]/scores` - Get scores for a game (after reveal)

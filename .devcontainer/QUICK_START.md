@@ -17,7 +17,7 @@
    npm run dev
    ```
 
-4. **Open browser** → [http://localhost:3000](http://localhost:3000)
+4. **Open browser** → [http://localhost:5173](http://localhost:5173)
 
 That's it! 🎉
 
@@ -35,11 +35,12 @@ npm start            # Run production build locally
 npm run lint         # Check for errors
 npm run format       # Auto-fix formatting
 npm run format:check # Check formatting (CI)
+npm run check        # Run svelte-check for type checking
 
 # Testing Mock Data
-curl http://localhost:3000/api/games                    # Today's games
-curl http://localhost:3000/api/games?date=2026-01-25   # Specific date
-curl http://localhost:3000/api/games/game-id/scores    # Game scores
+curl http://localhost:5173/api/games                    # Today's games
+curl http://localhost:5173/api/games?date=2026-01-25   # Specific date
+curl http://localhost:5173/api/games/game-id/scores    # Game scores
 ```
 
 ---
@@ -57,11 +58,11 @@ curl http://localhost:3000/api/games/game-id/scores    # Game scores
 
 ### Development Tools
 
-✅ **Hot reload** - Changes appear instantly  
-✅ **TypeScript** - Full type safety  
+✅ **Hot reload** - Changes appear instantly with Vite HMR
+✅ **TypeScript** - Full type safety with svelte-check
 ✅ **Tailwind CSS** - Utility-first styling  
 ✅ **ESLint** - Code linting  
-✅ **Prettier** - Auto-formatting  
+✅ **Prettier** - Auto-formatting with prettier-plugin-svelte
 ✅ **Dark mode** - System preference support
 
 ---
@@ -105,14 +106,14 @@ curl http://localhost:3000/api/games/game-id/scores    # Game scores
 ├── README.md              # Detailed docs
 └── QUICK_START.md         # This file
 
-lib/
+src/lib/
 ├── mockData.ts            # Mock data generator
 └── mockFixtures.ts        # Pre-defined scenarios
 
-app/api/
-├── games/route.ts         # Games endpoint
+src/routes/api/
+├── games/+server.ts       # Games endpoint
 └── games/[id]/scores/     # Scores endpoint
-    └── route.ts
+    └── +server.ts
 
 Documentation/
 ├── DEVCONTAINER_TESTING.md  # Testing guide
@@ -136,7 +137,7 @@ localStorage.clear();
 
 ```javascript
 // Mock data for specific date:
-import { generateMockGames } from '@/lib/mockData';
+import { generateMockGames } from '$lib/mockData';
 
 const games = generateMockGames(new Date('2026-01-25'));
 console.log(games);
@@ -175,8 +176,8 @@ npm install
 
 Once you're comfortable with mock data:
 
-1. **Explore components** in `components/` directory
-2. **Review types** in `types/game.ts`
+1. **Explore components** in `src/lib/components/` directory
+2. **Review types** in `src/lib/types/game.ts`
 3. **Check existing features** - date picker, game cards, spoiler protection
 4. **Read documentation** - especially DEVCONTAINER_TESTING.md
 5. **Start building** - add features, improve UI, integrate real APIs

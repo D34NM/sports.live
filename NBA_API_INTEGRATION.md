@@ -169,7 +169,7 @@ Transform NBA API responses to our schema:
 
 ```typescript
 // lib/nba/transformer.ts
-import { GameSafe } from '@/types/game';
+import { GameSafe } from '$lib/types/game';
 
 export function transformNBAGame(nbaGame: any): GameSafe {
   return {
