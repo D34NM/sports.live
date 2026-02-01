@@ -31,18 +31,18 @@ export default function Home() {
   }, [selectedDate]);
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto p-4 md:p-8">
-        <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+        <header className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             🏀 Sports.Live
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-lg text-gray-600 dark:text-gray-400">
             Watch NBA games without spoilers
           </p>
         </header>
 
-        <div className="mb-6">
+        <div className="mb-8">
           <DatePicker
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
@@ -50,17 +50,20 @@ export default function Home() {
         </div>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+            <div className="w-1 h-8 bg-gradient-to-b from-blue-600 to-purple-600 rounded-full"></div>
             {selectedDate.toDateString() === new Date().toDateString()
               ? "Today's Games"
-              : 'Games'}
+              : `Games for ${selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}
           </h2>
           <GameList games={games} isLoading={isLoading} />
         </section>
 
-        <footer className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500">
-          <p>Sports.Live - Your spoiler-free NBA companion</p>
-          <p className="mt-2">
+        <footer className="mt-16 pt-8 border-t-2 border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+          <p className="font-semibold mb-2">
+            Sports.Live - Your spoiler-free NBA companion
+          </p>
+          <p className="text-xs">
             Built with Next.js, TypeScript, and Tailwind CSS
           </p>
         </footer>
