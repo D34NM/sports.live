@@ -2,12 +2,12 @@
 name: NBA Spoiler-Free Web App Implementation Skills
 description: Step-by-step implementation guides for building a production-ready NBA web app
 category: web-development
-tags: [nextjs, typescript, supabase, pwa, real-time]
+tags: [sveltekit, svelte, typescript, supabase, pwa, real-time]
 ---
 
 # NBA Spoiler-Free Web App Implementation Skills
 
-This document provides detailed, actionable skills and implementation guides for building the NBA spoiler-free web application.
+This document provides detailed, actionable skills and implementation guides for building the NBA spoiler-free web application with SvelteKit.
 
 ## Table of Contents
 
@@ -28,26 +28,29 @@ This document provides detailed, actionable skills and implementation guides for
 
 ### Objective
 
-Set up a new Next.js project with TypeScript, Tailwind CSS, and all necessary dependencies.
+Set up a new SvelteKit project with TypeScript, Tailwind CSS, and all necessary dependencies.
 
 ### Prerequisites
 
 - Node.js 18+ installed
-- pnpm, npm, or yarn package manager
+- npm package manager
 - Git for version control
 
 ### Implementation Steps
 
-#### 1.1 Create Next.js Project
+#### 1.1 Create SvelteKit Project
 
 ```bash
-# Using pnpm (recommended)
-pnpm create next-app@latest sports-live \
-  --typescript \
-  --tailwind \
-  --app \
-  --src-dir \
-  --import-alias "@/*"
+# Create new SvelteKit project
+npm create svelte@latest sports-live
+
+# When prompted, select:
+# - Skeleton project
+# - TypeScript syntax
+# - ESLint for code linting
+# - Prettier for code formatting
+# - Playwright for browser testing (optional)
+# - Vitest for unit testing (optional)
 
 cd sports-live
 ```
@@ -55,53 +58,41 @@ cd sports-live
 #### 1.2 Install Core Dependencies
 
 ```bash
+# Install Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer @tailwindcss/postcss
+npx tailwindcss init -p
+
 # Supabase client
-pnpm add @supabase/supabase-js @supabase/ssr
+npm add @supabase/supabase-js @supabase/ssr
 
-# UI components and utilities
-pnpm add @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-tabs
-pnpm add lucide-react class-variance-authority clsx tailwind-merge
-pnpm add date-fns zod
-
-# State management
-pnpm add zustand
-
-# Forms
-pnpm add react-hook-form @hookform/resolvers
+# UI utilities and icons
+npm add lucide-svelte clsx tailwind-merge
+npm add date-fns zod
 
 # Development dependencies
-pnpm add -D @types/node prettier eslint-config-prettier
+npm add -D @types/node prettier prettier-plugin-svelte
+npm add -D eslint-plugin-svelte svelte-check
+npm add -D husky lint-staged
 ```
 
 #### 1.3 Configure TypeScript (tsconfig.json)
 
+SvelteKit will generate this for you, but ensure it includes:
+
 ```json
 {
+  "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
+    "checkJs": true,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "bundler"
+  }
 }
 ```
 
@@ -114,16 +105,20 @@ pnpm add -D @types/node prettier eslint-config-prettier
   "singleQuote": true,
   "printWidth": 80,
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": true,
+  "plugins": ["prettier-plugin-svelte"],
+  "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }
 ```
 
-#### 1.5 Create Environment Variables (.env.local)
+#### 1.5 Create Environment Variables (.env)
+
+Note: In SvelteKit, environment variables prefixed with `PUBLIC_` are exposed to the client.
 
 ```bash
 # Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+PUBLIC_SUPABASE_URL=your_supabase_url
+PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
 # NBA API (if using custom endpoint)
@@ -134,25 +129,25 @@ UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token
 
 # App configuration
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+PUBLIC_APP_URL=http://localhost:5173
 ```
 
 #### 1.6 Create Project Structure
 
 ```bash
-mkdir -p src/{app,components,lib,types}
-mkdir -p src/components/{ui,game,shared,layout}
-mkdir -p src/lib/{db,api,utils,hooks}
-mkdir -p src/app/api
+mkdir -p src/lib/{components,server,stores,types,utils}
+mkdir -p src/lib/components/{ui,game,shared}
+mkdir -p src/lib/server/{db,api}
+mkdir -p src/routes/api
 ```
 
 ### Verification
 
 ```bash
 # Run development server
-pnpm dev
+npm run dev
 
-# Should start on http://localhost:3000
+# Should start on http://localhost:5173
 ```
 
 ---
@@ -509,11 +504,26 @@ SELECT * FROM pg_policies;
 
 ### Objective
 
-Build React components that display game information without revealing scores until explicitly requested.
+Build Svelte components that display game information without revealing scores until explicitly requested.
+
+### Important Note
+
+The code examples below show patterns using React/Next.js syntax for reference. When implementing with SvelteKit and Svelte 5, adapt these patterns as follows:
+
+**React to Svelte Conversions:**
+- `useState()` → `$state()`
+- `useEffect()` → `$effect()` or `onMount()`
+- `useMemo()` → `$derived()`
+- Props: `function Component({ prop })` → `let { prop } = $props()`
+- Events: `onClick={handler}` → `onclick={handler}`
+- Conditional rendering: `{condition && <div>}` → `{#if condition}<div>{/if}`
+- Imports: `import { Icon } from 'lucide-react'` → `import { Icon } from 'lucide-svelte'`
+- File extensions: `.tsx` → `.svelte`
+- Remove `'use client'` directives (not needed in Svelte)
 
 ### Implementation Steps
 
-#### 3.1 Create Types (src/types/game.ts)
+#### 3.1 Create Types (src/lib/types/game.ts)
 
 ```typescript
 export interface Team {
@@ -980,9 +990,13 @@ export default function TestPage() {
 
 Implement a date-based game list with navigation to browse games by date.
 
+### Important Note
+
+The code examples below use React/Next.js syntax. When implementing with SvelteKit and Svelte 5, apply the conversion patterns described in Skill 3 (useState → $state, etc.).
+
 ### Implementation Steps
 
-#### 4.1 Create Date Navigation Component (src/components/game/date-navigation.tsx)
+#### 4.1 Create Date Navigation Component (src/lib/components/game/DateNavigation.svelte)
 
 ```typescript
 'use client';
@@ -1050,7 +1064,7 @@ export function DateNavigation({
 }
 ```
 
-#### 4.2 Create Game List Component (src/components/game/game-list.tsx)
+#### 4.2 Create Game List Component (src/lib/components/game/GameList.svelte)
 
 ```typescript
 'use client';
@@ -1131,16 +1145,16 @@ export function GameList({ initialGames, initialDate }: GameListProps) {
 }
 ```
 
-#### 4.3 Create API Route (src/app/api/games/route.ts)
+#### 4.3 Create API Route (src/routes/api/games/+server.ts)
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import { createClient } from '$lib/server/supabase';
 import { startOfDay, endOfDay } from 'date-fns';
 
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const dateParam = searchParams.get('date');
+export const GET: RequestHandler = async ({ url, locals }) => {
+  const dateParam = url.searchParams.get('date');
 
   const date = dateParam ? new Date(dateParam) : new Date();
   const start = startOfDay(date);
@@ -1154,7 +1168,7 @@ export async function GET(request: NextRequest) {
   });
 
   if (error) {
-    return NextResponse.json(
+    return json(
       { error: 'Failed to fetch games' },
       { status: 500 }
     );
@@ -1186,8 +1200,8 @@ export async function GET(request: NextRequest) {
     totalRatings: game.total_ratings,
   }));
 
-  return NextResponse.json({ games: transformedGames });
-}
+  return json({ games: transformedGames });
+};
 ```
 
 ### Verification
@@ -1208,9 +1222,13 @@ _Implementation covered in Skill 3_
 
 Implement user voting and rating system for games.
 
+### Important Note
+
+The code examples below use React/Next.js syntax. When implementing with SvelteKit and Svelte 5, apply the conversion patterns described in Skill 3.
+
 ### Implementation Steps
 
-#### 6.1 Create Rating Component (src/components/game/game-rating.tsx)
+#### 6.1 Create Rating Component (src/lib/components/game/GameRating.svelte)
 
 ```typescript
 'use client';
@@ -1337,25 +1355,24 @@ export function GameRating({
 }
 ```
 
-#### 6.2 Create Rating API Route (src/app/api/games/[id]/rate/route.ts)
+#### 6.2 Create Rating API Route (src/routes/api/games/[id]/rate/+server.ts)
 
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import { createClient } from '$lib/server/supabase';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const supabase = createClient();
+export const POST: RequestHandler = async ({ params, request, locals }) => {
+  const supabase = createClient(locals);
 
   // Check authentication
   const {
+    const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const { rating, voteType } = await request.json();
@@ -1363,7 +1380,7 @@ export async function POST(
 
   // Validate rating
   if (rating < 0 || rating > 10) {
-    return NextResponse.json(
+    return json(
       { error: 'Rating must be between 0 and 10' },
       { status: 400 }
     );
@@ -1377,7 +1394,7 @@ export async function POST(
     .single();
 
   if (!game || game.status !== 'final') {
-    return NextResponse.json(
+    return json(
       { error: 'Can only rate completed games' },
       { status: 400 }
     );
@@ -1388,7 +1405,7 @@ export async function POST(
     (Date.now() - gameDate.getTime()) / (1000 * 60 * 60 * 24);
 
   if (daysSinceGame > 7) {
-    return NextResponse.json(
+    return json(
       { error: 'Voting window has closed (7 days after game)' },
       { status: 400 }
     );
@@ -1409,14 +1426,14 @@ export async function POST(
   );
 
   if (error) {
-    return NextResponse.json(
+    return json(
       { error: 'Failed to save rating' },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ success: true });
-}
+  return json({ success: true });
+};
 ```
 
 ### Verification
