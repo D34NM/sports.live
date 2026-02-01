@@ -13,6 +13,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "lucide-react": "^0.563.0",
     "next": "^15.5.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -45,7 +46,7 @@
     ]
   },
   "optionalDependencies": {
-    "@next/swc-linux-x64-gnu": "15.5.11",
+    "@next/swc-linux-x64-gnu": "^15.0.3",
     "@next/swc-linux-x64-musl": "15.5.11"
   }
 }

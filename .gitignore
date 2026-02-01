@@ -35,3 +35,4 @@ next-env.d.ts
 
 # Temporary testing dependencies
 node_modules/puppeteer/
+screenshot-preview.png
