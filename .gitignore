@@ -6,12 +6,11 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
+# SvelteKit
+/.svelte-kit
 /build
+.vercel
+.netlify
 
 # misc
 .DS_Store
@@ -26,13 +25,14 @@ yarn-error.log*
 .env*.local
 .env
 
-# vercel
-.vercel
-
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # Temporary testing dependencies
 node_modules/puppeteer/
 screenshot-preview.png
+
+# Old Next.js artifacts (to be removed)
+/.next/
+/out/
+next-env.d.ts
